@@ -245,13 +245,19 @@
         </div>
     </section>
 
+
+    <!-- ✅ CONTACT SECTION -->
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
+
             <div class="contact-content">
+
+                <!-- ✅ Contact Info -->
                 <div class="contact-info">
                     <h3>Let’s collaborate</h3>
                     <p>Need rapid prototypes, design systems, or production-ready front-ends? Send a note.</p>
+
                     <div class="contact-details">
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
@@ -266,29 +272,46 @@
                             <span>Bengaluru, India</span>
                         </div>
                     </div>
+
                     <div class="social-links contact-social">
-                        <a href="https://github.com/" target="_blank" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/" target="_blank" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://behance.net/" target="_blank" class="social-icon" aria-label="Behance"><i class="fab fa-behance"></i></a>
-                        <a href="https://instagram.com/" target="_blank" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://github.com/" target="_blank" class="social-icon" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/" target="_blank" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://behance.net/" target="_blank" class="social-icon" aria-label="Behance">
+                            <i class="fab fa-behance"></i>
+                        </a>
+                        <a href="https://instagram.com/" target="_blank" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
+
+                <!-- ✅ EmailJS Contact Form -->
                 <form id="contactForm" class="contact-form">
                     <div class="form-group">
-                        <input id="user_name" type="text" placeholder="Your Name" required>
+                        <input id="user_name" name="from_name" type="text" placeholder="Your Name" required />
                     </div>
+
                     <div class="form-group">
-                        <input id="user_email" type="email" placeholder="Your Email" required>
+                        <input id="user_email" name="from_email" type="email" placeholder="Your Email" required />
                     </div>
+
                     <div class="form-group">
-                        <input id="subject" type="text" placeholder="Subject" required>
+                        <input id="subject" name="subject" type="text" placeholder="Subject" required />
                     </div>
+
                     <div class="form-group">
-                        <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+                        <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
                     </div>
+
                     <button type="submit" class="btn btn-primary">Send Message</button>
+
                     <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
                 </form>
+
             </div>
         </div>
     </section>
@@ -300,7 +323,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@4/dist/email.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
