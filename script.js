@@ -1,82 +1,71 @@
-// Mobile Navigation Toggle
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
+// ============================
+// ✅ Mobile Navigation Toggle
+// ============================
+const hamburger = document.querySelector(".hamburger");
+const navMenu = document.querySelector(".nav-menu");
 
-// Support both click and touch events for better Android compatibility
 const toggleMenu = () => {
-    navMenu.classList.toggle('active');
-    hamburger.classList.toggle('active');
+  if (!navMenu || !hamburger) return;
+  navMenu.classList.toggle("active");
+  hamburger.classList.toggle("active");
 };
 
 if (hamburger) {
-    hamburger.addEventListener('click', toggleMenu);
-    hamburger.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        toggleMenu();
-    });
+  hamburger.addEventListener("click", toggleMenu);
 }
 
 // Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        hamburger.classList.remove('active');
-    });
+document.querySelectorAll(".nav-menu a").forEach((link) => {
+  link.addEventListener("click", () => {
+    navMenu.classList.remove("active");
+    hamburger.classList.remove("active");
+  });
 });
 
-// Smooth scroll for navigation links (Android compatible)
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    const handleScroll = function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            // Use requestAnimationFrame for better Android performance
-            requestAnimationFrame(() => {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            });
-        }
-    };
-    
-    anchor.addEventListener('click', handleScroll);
-    // Also support touch for Android
-    anchor.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        handleScroll.call(anchor, e);
-    });
+// ============================
+// ✅ Smooth Scroll (Simple)
+// ============================
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", function (e) {
+    const target = document.querySelector(this.getAttribute("href"));
+    if (!target) return;
+
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 });
 
-// Active navigation link highlighting
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.nav-menu a');
+// ============================
+// ✅ Active Navbar Highlight
+// ============================
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".nav-menu a");
 
-window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.scrollY >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
+window.addEventListener("scroll", () => {
+  let current = "";
 
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop;
+    if (window.scrollY >= sectionTop - 200) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach((link) => {
+    link.classList.remove("active");
+    if (link.getAttribute("href") === `#${current}`) {
+      link.classList.add("active");
+    }
+  });
 });
-// ✅ EmailJS Full Working Script
 
-// ✅ Replace these 3 values with your EmailJS details:
+// ============================
+// ✅ EmailJS Setup
+// ============================
 const EMAILJS_PUBLIC_KEY = "hDU9LTsC2dM18-k09";
 const EMAILJS_SERVICE_ID = "service_ww30roj";
 const EMAILJS_TEMPLATE_ID = "template_kckr2wu";
 
-// ✅ Initialize EmailJS
 (function () {
   emailjs.init(EMAILJS_PUBLIC_KEY);
 })();
@@ -88,12 +77,10 @@ if (contactForm) {
   contactForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // ✅ Show "Sending..."
     formMessage.style.display = "block";
     formMessage.textContent = "Sending...";
     formMessage.className = "form-message sending";
 
-    // ✅ Send form using EmailJS sendForm()
     emailjs
       .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, contactForm)
       .then(() => {
@@ -113,117 +100,66 @@ if (contactForm) {
         formMessage.textContent =
           "❌ Failed to send message. Please try again later.";
         formMessage.className = "form-message error";
-
-        setTimeout(() => {
-          formMessage.style.display = "none";
-        }, 5000);
       });
   });
 }
 
-
-// Intersection Observer for fade-in animations
+// ============================
+// ✅ Intersection Observer Animations
+// ============================
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+  threshold: 0.1,
+  rootMargin: "0px 0px -50px 0px",
 };
 
 const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = "1";
+      entry.target.style.transform = "translateY(0)";
+    }
+  });
 }, observerOptions);
 
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.skill-card, .project-card, .stat-item');
-    animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  const animateElements = document.querySelectorAll(
+    ".skill-card, .project-card, .stat-item"
+  );
+
+  animateElements.forEach((el) => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(20px)";
+    el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+    observer.observe(el);
+  });
 });
 
-// Typing effect for hero title (optional enhancement)
-const heroTitle = document.querySelector('.hero-title');
-if (heroTitle) {
-    const text = heroTitle.textContent;
-    heroTitle.textContent = '';
-    let i = 0;
-    
-    function typeWriter() {
-        if (i < text.length) {
-            heroTitle.textContent += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 50);
-        }
-    }
-    
-    // Uncomment to enable typing effect
-    // typeWriter();
-}
-
-// Add active class to nav links on page load
-window.addEventListener('load', () => {
-    const hash = window.location.hash;
-    if (hash) {
-        const targetLink = document.querySelector(`.nav-menu a[href="${hash}"]`);
-        if (targetLink) {
-            targetLink.classList.add('active');
-        }
-    } else {
-        const homeLink = document.querySelector('.nav-menu a[href="#home"]');
-        if (homeLink) {
-            homeLink.classList.add('active');
-        }
-    }
-});
-
-// Android-specific optimizations
-// Prevent double-tap zoom on buttons and links
-let lastTouchEnd = 0;
-document.addEventListener('touchend', (e) => {
-    const now = Date.now();
-    if (now - lastTouchEnd <= 300) {
-        e.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
-
-// Handle viewport height changes when Android keyboard appears
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-window.addEventListener('resize', () => {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-});
-
-// Improve scroll performance on Android
+// ============================
+// ✅ Navbar UI Optimization
+// ============================
 let ticking = false;
+
 const optimizedScroll = () => {
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(15, 23, 42, 0.98)';
-            navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
-        } else {
-            navbar.style.background = 'rgba(15, 23, 42, 0.95)';
-            navbar.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-        }
+  const navbar = document.querySelector(".navbar");
+  if (navbar) {
+    if (window.scrollY > 50) {
+      navbar.style.background = "rgba(15, 23, 42, 0.98)";
+      navbar.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.3)";
+    } else {
+      navbar.style.background = "rgba(15, 23, 42, 0.95)";
+      navbar.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
     }
-    ticking = false;
+  }
+  ticking = false;
 };
 
-window.addEventListener('scroll', () => {
+window.addEventListener(
+  "scroll",
+  () => {
     if (!ticking) {
-        window.requestAnimationFrame(optimizedScroll);
-        ticking = true;
+      window.requestAnimationFrame(optimizedScroll);
+      ticking = true;
     }
-}, { passive: true });
-
-
+  },
+  { passive: true }
+);
