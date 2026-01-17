@@ -69,64 +69,58 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+// ✅ EmailJS Full Working Script
 
-// Initialize EmailJS
-(function() {
-    emailjs.init("YOUR_PUBLIC_KEY"); // You'll need to replace this with your EmailJS public key
+// ✅ Replace these 3 values with your EmailJS details:
+const EMAILJS_PUBLIC_KEY = "hDU9LTsC2dM18-k09";
+const EMAILJS_SERVICE_ID = "service_ww30roj";
+const EMAILJS_TEMPLATE_ID = "template_kckr2wu";
+
+// ✅ Initialize EmailJS
+(function () {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
 })();
 
-// Form submission handler
-const contactForm = document.getElementById('contactForm');
-const formMessage = document.getElementById('form-message');
+const contactForm = document.getElementById("contactForm");
+const formMessage = document.getElementById("form-message");
 
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form values
-        const name = document.getElementById('user_name').value;
-        const email = document.getElementById('user_email').value;
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value;
-        
-        // Show loading message
-        formMessage.textContent = 'Sending...';
-        formMessage.className = 'form-message sending';
-        formMessage.style.display = 'block';
-        
-        // Prepare email parameters
-        const templateParams = {
-            from_name: name,
-            from_email: email,
-            subject: subject,
-            message: message,
-            to_email: 'ruthrasamy6@gmail.com'
-        };
-        
-        // Send email using EmailJS
-        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
-            .then(function(response) {
-                // Success
-                formMessage.textContent = 'Thank you! Your message has been sent successfully. I will get back to you soon.';
-                formMessage.className = 'form-message success';
-                contactForm.reset();
-                
-                // Hide message after 5 seconds
-                setTimeout(() => {
-                    formMessage.style.display = 'none';
-                }, 5000);
-            }, function(error) {
-                // Error
-                formMessage.textContent = 'Sorry, there was an error sending your message. Please try again or email me directly at ruthrasamy6@gmail.com';
-                formMessage.className = 'form-message error';
-                
-                // Hide message after 5 seconds
-                setTimeout(() => {
-                    formMessage.style.display = 'none';
-                }, 5000);
-            });
-    });
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // ✅ Show "Sending..."
+    formMessage.style.display = "block";
+    formMessage.textContent = "Sending...";
+    formMessage.className = "form-message sending";
+
+    // ✅ Send form using EmailJS sendForm()
+    emailjs
+      .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, contactForm)
+      .then(() => {
+        formMessage.textContent =
+          "✅ Thank you! Your message has been sent successfully.";
+        formMessage.className = "form-message success";
+
+        contactForm.reset();
+
+        setTimeout(() => {
+          formMessage.style.display = "none";
+        }, 5000);
+      })
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
+
+        formMessage.textContent =
+          "❌ Failed to send message. Please try again later.";
+        formMessage.className = "form-message error";
+
+        setTimeout(() => {
+          formMessage.style.display = "none";
+        }, 5000);
+      });
+  });
 }
+
 
 // Intersection Observer for fade-in animations
 const observerOptions = {
@@ -231,4 +225,5 @@ window.addEventListener('scroll', () => {
         ticking = true;
     }
 }, { passive: true });
+
 
